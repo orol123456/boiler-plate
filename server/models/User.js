@@ -76,10 +76,12 @@ userSchema.methods.generateToken=function(cb){
 
 }
 userSchema.methods.comparePassword=function(plainPassword,cb){
+    console.log(plainPassword)
     bcrypt.compare(plainPassword,this.password,function(err,isMatch){
         if(err){
             return cb(err)
         }
+        console.log(isMatch)
         cb(null,isMatch)
     })
 

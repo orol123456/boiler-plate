@@ -31,10 +31,15 @@ app.post('/api/users/login',(req,res)=>{
             message:"제공된 이메일에 해당하는 유저가 없다."
         })
         }
+        console.log('ok')
         user.comparePassword(req.body.password,(err,isMatch)=>{
-            if(!isMatch)
+            
+            if(!isMatch){
+                console.log('1')
                 return res.json({loginSuccess:false,message:"비밀번호 틀림"})
+            }
             user.generateToken((err,user)=>{
+                console.log(user)
                 if(err) return res.status(400).send(err)
                 res.cookie('x_auth',user.token).status(200).json({loginSuccess:true,userId:user._id})
             })
@@ -68,5 +73,8 @@ app.get('/api/users/logout',auth,(req,res)=>{
                 success:true
             })
         })
+})
+app.get('/api/hello',(requset,response)=>{
+    response.send('hello')
 })
 app.listen(port,()=>console.log(`application listening at${port}`))
